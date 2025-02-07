@@ -1,5 +1,8 @@
-<leader>colt for better backgrounds 
+
+< leader> colt for better backgrounds 
+
 <leader>colr better background and warm text colors
+
 ':colorscheme onedark' default !!
 
 ![Screenshot from 2025-02-07 00-44-03](https://github.com/user-attachments/assets/daa5eb51-3c3c-4620-aed4-74c2325905ae)

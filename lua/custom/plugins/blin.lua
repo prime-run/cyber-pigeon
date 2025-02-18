@@ -14,7 +14,7 @@ return {
     },
     completion = {
       list = {
-        selection = { preselect = true, auto_insert = false }, 
+        selection = { preselect = true, auto_insert = false },
       },
       keyword = {
         range = 'full',
@@ -25,7 +25,7 @@ return {
         scrollbar = false,
         draw = {
           columns = {
-            { "label", "label_description", gap = 1 },
+            { 'label', 'label_description', gap = 1 },
           },
         },
       },
@@ -39,15 +39,10 @@ return {
         },
       },
     },
-    signature = { enabled = true,
-
-      window = {
-        border = 'padded',
-        min_width = 15,
-      },
-
-
-    },
+    signature = { enabled = true, window = {
+      border = 'padded',
+      min_width = 15,
+    } },
   },
-  opts_extend = { "sources.default" },
+  opts_extend = { 'sources.default' },
 }

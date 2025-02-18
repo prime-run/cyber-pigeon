@@ -65,11 +65,11 @@ vim.keymap.set('n', '<leader>pp', vim.cmd.Oil)
 
 vim.keymap.set('n', '<Tab>', 'o<Esc>', { noremap = true, silent = true })
 
-vim.keymap.set('n', '!', '^', { noremap = true, silent = true })
-vim.keymap.set('n', '@', '$', { noremap = true, silent = true })
-
-vim.keymap.set('v', '!', '^', { noremap = true, silent = true })
-vim.keymap.set('v', '@', '$', { noremap = true, silent = true })
+-- vim.keymap.set('n', '!', '^', { noremap = true, silent = true })
+-- vim.keymap.set('n', '@', '$', { noremap = true, silent = true })
+--
+-- vim.keymap.set('v', '!', '^', { noremap = true, silent = true })
+-- vim.keymap.set('v', '@', '$', { noremap = true, silent = true })
 -- move commands in visual mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
@@ -454,20 +454,24 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {
-          settings = {
-            python = {
-              analysis = {
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = 'workspace',
-                typeCheckingMode = 'off',
-                extraPaths = { '.' },
-                stubPath = vim.fn.stdpath 'data' .. '/stubs',
-              },
-            },
-          },
-        },
+        -- pyright = {
+        --   settings = {
+        --     python = {
+        --       analysis = {
+        --         typeCheckingMode = 'basic', -- or 'strict' for stricter checks
+        --         diagnosticMode = 'workspace',
+        --         autoSearchPaths = true,
+        --         useLibraryCodeForTypes = true,
+        --         stubPath = vim.fn.stdpath 'data' .. '/stubs',
+        --         extraPaths = { './your_project_dir' }, -- Add your Django project root
+        --         djangoEnabled = true,
+        --         diagnosticSeverityOverrides = {
+        --           reportUnusedVariable = 'warning',
+        --         },
+        --       },
+        --     },
+        --   },
+        -- },
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },

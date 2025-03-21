@@ -1,14 +1,3 @@
--- return {
---   'navarasu/onedark.nvim',
---   config = function()
---     require('onedark').setup {
---       colors = {
---         bg0 = '#000000',
---       },
---     }
---     require('onedark').load()
---   end,
--- }
 return {
   'olimorris/onedarkpro.nvim',
   config = function()
@@ -105,7 +94,7 @@ return {
 
       options = {
         cursorline = true, -- Use cursorline highlighting?
-        transparency = false, -- Use a transparent background?
+        transparency = true, -- Use a transparent background?
         terminal_colors = true, -- Use the theme's colors for Neovim's :terminal?
         lualine_transparency = false, -- Center bar transparency?
         highlight_inactive_windows = true, -- When the window is out of focus, change the normal background?

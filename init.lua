@@ -99,8 +99,13 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('n', '<leader>rep', function()
+  local replacement = vim.fn.escape(vim.fn.getreg '.', '/\\&') -- Use LAST INSERTED TEXT (.)
+  vim.cmd('keeppatterns %s//' .. replacement .. '/g')
+end, { desc = 'Replace all with last change' })
+
 vim.keymap.set('n', '<leader>colt', function()
-  vim.cmd.colorscheme 'tokyonight'
+  vim.cmd.colorscheme 'tokyonight-moon'
 end, { desc = 'Color Tokyo' })
 
 vim.keymap.set('n', '<leader>colr', function()

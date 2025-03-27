@@ -6,10 +6,8 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Enable mouse mode
 vim.opt.mouse = 'a'
 
--- it's already in the status line
 vim.opt.showmode = false
 
 -- Sync clipboard between
@@ -17,103 +15,35 @@ vim.opt.showmode = false
 --   vim.opt.clipboard = 'unnamedplus'
 -- end)
 
--- vim.opt.breakindent = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 vim.opt.termguicolors = true
--- Save undo history
+--  undo history
 vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
 vim.opt.signcolumn = 'yes'
-
 vim.opt.updatetime = 250
-
 --  mapped sequence wait time
 vim.opt.timeoutlen = 300
-
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
-
 --cursor line
 vim.opt.cursorline = true
-
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 13
-
--- Clear highlights on search whvven pressing <Esc> in normal mode
---
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '<leader>pv', ':e .<CR>', { noremap = true, silent = true })
-
-vim.keymap.set('n', '<leader>pp', vim.cmd.Oil)
-
-vim.keymap.set('n', '<Tab>', 'o<Esc>', { noremap = true, silent = true })
-
--- vim.keymap.set('n', '!', '^', { noremap = true, silent = true })
--- vim.keymap.set('n', '@', '$', { noremap = true, silent = true })
---
--- vim.keymap.set('v', '!', '^', { noremap = true, silent = true })
--- vim.keymap.set('v', '@', '$', { noremap = true, silent = true })
--- move commands in visual mode
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]])
-
-vim.keymap.set('i', '<M-h>', '<Left>', { noremap = true })
-vim.keymap.set('i', '<M-j>', '<Down>', { noremap = true })
-vim.keymap.set('i', '<M-k>', '<Up>', { noremap = true })
-vim.keymap.set('i', '<M-l>', '<Right>', { noremap = true })
-
-vim.keymap.set('i', '<M-CR>', '<Esc>o<UP>', { noremap = true, silent = true })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
--- Keybinds to make split navigation easier.
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
-vim.keymap.set('n', '<leader>rep', function()
-  local replacement = vim.fn.escape(vim.fn.getreg '.', '/\\&') -- Use LAST INSERTED TEXT (.)
-  vim.cmd('keeppatterns %s//' .. replacement .. '/g')
-end, { desc = 'Replace all with last change' })
-
-vim.keymap.set('n', '<leader>colt', function()
-  vim.cmd.colorscheme 'tokyonight-moon'
-end, { desc = 'Color Tokyo' })
-
-vim.keymap.set('n', '<leader>colr', function()
-  vim.cmd.colorscheme 'rose-pine'
-end, { desc = 'Color Rose-pine' })
-
---replace them ffs that messes up the damn pp in v mode!
-vim.keymap.set('i', '<C-c>', '<C-[><Esc>', { noremap = true })
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -135,7 +65,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
+require('lazy').setup {
   'tpope/vim-sleuth',
 
   {
@@ -412,7 +342,7 @@ require('lazy').setup({
           close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
         },
         --NOTE:it should be broken to wrok!! dont touch it it works! eventho it shouldn
-        virtual_text = true,
+        -- virtual_text = true,
         virtual_text = {
           spacing = 4,
           source = 'if_many',
@@ -450,12 +380,6 @@ require('lazy').setup({
         require('blink.cmp').get_lsp_capabilities(),
         require('cmp_nvim_lsp').default_capabilities()
       )
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
         -- gopls = {},
@@ -486,7 +410,6 @@ require('lazy').setup({
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = { disable = { 'missing-fields' } },
             },
           },
@@ -495,7 +418,7 @@ require('lazy').setup({
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -503,6 +426,7 @@ require('lazy').setup({
         handlers = {
           function(server_name)
             -- Skip TypeScript LSP since we're using typescript-tools.nvim
+            -- NOTE:fuck ts btw!
             if server_name == 'tsserver' then
               return
             end
@@ -515,71 +439,16 @@ require('lazy').setup({
     end,
   },
 
-  -- { -- Autoformat
-  --   'stevearc/conform.nvim',
-  --   event = { 'BufWritePre' },
-  --   cmd = { 'ConformInfo' },
-  --   keys = {
-  --     {
-  --       '<leader>ff',
-  --       function()
-  --         require('conform').format { async = true, lsp_format = 'fallback' }
-  --       end,
-  --       mode = '',
-  --       desc = '[F]ormat buffer',
-  --     },
-  --   },
-  --   opts = {
-  --     notify_on_error = false,
-  --     format_on_save = function(bufnr)
-  --       -- Disable "format_on_save lsp_fallback" for languages that don't
-  --       local disable_filetypes = { c = true, cpp = true }
-  --       local lsp_format_opt
-  --       if disable_filetypes[vim.bo[bufnr].filetype] then
-  --         lsp_format_opt = 'never'
-  --       else
-  --         lsp_format_opt = 'fallback'
-  --       end
-  --       return {
-  --         timeout_ms = 500,
-  --         lsp_format = lsp_format_opt,
-  --       }
-  --     end,
-  --     formatters_by_ft = {
-  --       lua = { 'stylua' },
-  --       -- Conform can also run multiple formatters sequentially
-  --       -- python = { "isort", "black" },
-  --       -- javascript = { "prettierd", "prettier", stop_after_first = true },
-  --     },
-  --   },
-  -- },
-
   require 'core.plugins.debug',
   require 'core.plugins.lint',
   require 'core.plugins.autopairs',
   require 'core.plugins.gitsigns',
 
   { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
+
   -- <leader>sh snvim help
-}, {
-  ui = {
-    icons = vim.g.have_nerd_font and {} or {
-      cmd = '⌘',
-      config = '🛠',
-      event = '📅',
-      ft = '📂',
-      init = '⚙',
-      keys = '🗝',
-      plugin = '🔌',
-      runtime = '💻',
-      require = '🌙',
-      source = '📄',
-      start = '🚀',
-      task = '📌',
-      lazy = '💤 ',
-    },
-  },
-})
+}
 
 --  `modeline`.  `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

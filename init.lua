@@ -6,8 +6,10 @@ vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Enable mouse mode
 vim.opt.mouse = 'a'
 
+-- it's already in the status line
 vim.opt.showmode = false
 
 -- Sync clipboard between
@@ -15,35 +17,102 @@ vim.opt.showmode = false
 --   vim.opt.clipboard = 'unnamedplus'
 -- end)
 
+-- vim.opt.breakindent = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 vim.opt.termguicolors = true
---  undo history
+-- Save undo history
 vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
 vim.opt.signcolumn = 'yes'
+
 vim.opt.updatetime = 250
+
 --  mapped sequence wait time
 vim.opt.timeoutlen = 300
+
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
+
 --cursor line
 vim.opt.cursorline = true
+
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 13
+
+-- Clear highlights on search whvven pressing <Esc> in normal mode
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader>pv', ':e .<CR>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>pp', vim.cmd.Oil)
+
+vim.keymap.set('n', '<Tab>', 'o<Esc>', { noremap = true, silent = true })
+
+-- vim.keymap.set('n', '!', '^', { noremap = true, silent = true })
+-- vim.keymap.set('n', '@', '$', { noremap = true, silent = true })
+--
+-- vim.keymap.set('v', '!', '^', { noremap = true, silent = true })
+-- vim.keymap.set('v', '@', '$', { noremap = true, silent = true })
+-- move commands in visual mode
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]])
+
+vim.keymap.set('i', '<M-h>', '<Left>', { noremap = true })
+vim.keymap.set('i', '<M-j>', '<Down>', { noremap = true })
+vim.keymap.set('i', '<M-k>', '<Up>', { noremap = true })
+vim.keymap.set('i', '<M-l>', '<Right>', { noremap = true })
+
+vim.keymap.set('i', '<M-CR>', '<Esc>o<UP>', { noremap = true, silent = true })
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+
+-- Keybinds to make split navigation easier.
+--  See `:help wincmd` for a list of all window commands
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+vim.keymap.set('n', '<leader>rep', function()
+  local replacement = vim.fn.escape(vim.fn.getreg '.', '/\\&') -- Use LAST INSERTED TEXT (.)
+  vim.cmd('keeppatterns %s//' .. replacement .. '/g')
+end, { desc = 'Replace all with last change' })
+
+vim.keymap.set('n', '<leader>colt', function()
+  vim.cmd.colorscheme 'tokyonight-moon'
+end, { desc = 'Color Tokyo' })
+
+vim.keymap.set('n', '<leader>colr', function()
+  vim.cmd.colorscheme 'rose-pine'
+end, { desc = 'Color Rose-pine' })
+
+--replace them ffs that messes up the damn pp in v mode!
+vim.keymap.set('i', '<C-c>', '<C-[><Esc>', { noremap = true })
 
 -- Highlight when yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -56,6 +125,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
   local out = vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
@@ -66,73 +136,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  'tpope/vim-sleuth',
-
-  {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
-
-  {
-    'folke/which-key.nvim',
-    event = 'VimEnter',
-    opts = {
-      -- delay between pressing a key and opening which-key (milliseconds)
-      delay = 750,
-      icons = {
-        mappings = vim.g.have_nerd_font,
-        keys = vim.g.have_nerd_font and {} or {
-          Up = '<Up> ',
-          Down = '<Down> ',
-          Left = '<Left> ',
-          Right = '<Right> ',
-          C = '<C-…> ',
-          M = '<M-…> ',
-          D = '<D-…> ',
-          S = '<S-…> ',
-          CR = '<CR> ',
-          Esc = '<Esc> ',
-          ScrollWheelDown = '<ScrollWheelDown> ',
-          ScrollWheelUp = '<ScrollWheelUp> ',
-          NL = '<NL> ',
-          BS = '<BS> ',
-          Space = '<Space> ',
-          Tab = '<Tab> ',
-          F1 = '<F1>',
-          F2 = '<F2>',
-          F3 = '<F3>',
-          F4 = '<F4>',
-          F5 = '<F5>',
-          F6 = '<F6>',
-          F7 = '<F7>',
-          F8 = '<F8>',
-          F9 = '<F9>',
-          F10 = '<F10>',
-          F11 = '<F11>',
-          F12 = '<F12>',
-        },
-      },
-
-      -- Document existing key chains
-      spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-      },
-    },
-  },
+  'tpope/vim-sleuth', --auto shift width and width tab
 
   {
     'nvim-telescope/telescope.nvim',
@@ -342,7 +346,7 @@ require('lazy').setup {
           close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter', 'FocusLost' },
         },
         --NOTE:it should be broken to wrok!! dont touch it it works! eventho it shouldn
-        -- virtual_text = true,
+        virtual_text = true,
         virtual_text = {
           spacing = 4,
           source = 'if_many',
@@ -410,6 +414,7 @@ require('lazy').setup {
               completion = {
                 callSnippet = 'Replace',
               },
+              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               diagnostics = { disable = { 'missing-fields' } },
             },
           },
@@ -418,7 +423,7 @@ require('lazy').setup {
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua',
+        'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -426,7 +431,6 @@ require('lazy').setup {
         handlers = {
           function(server_name)
             -- Skip TypeScript LSP since we're using typescript-tools.nvim
-            -- NOTE:fuck ts btw!
             if server_name == 'tsserver' then
               return
             end
@@ -445,8 +449,6 @@ require('lazy').setup {
   require 'core.plugins.gitsigns',
 
   { import = 'custom.plugins' },
-  { import = 'custom.plugins' },
-
   -- <leader>sh snvim help
 }
 

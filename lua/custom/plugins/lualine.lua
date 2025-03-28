@@ -12,22 +12,26 @@ return {
       fg = '#c3ccdc',
       bg = '#112638',
       inactive_bg = '#2c3043',
+      semilightgray = '#6c6f93',
+      kitty = '#9ABBE6',
     }
+    -- #9ABBE6
+    -- #9ABBE6
 
     local my_lualine_theme = {
       normal = {
         a = { bg = colors.blue, fg = colors.bg, gui = 'bold' },
-        b = { bg = colors.green, fg = colors.bg }, -- Pill background
+        b = { bg = colors.kitty, fg = colors.bg }, -- Pill background
         c = { bg = colors.bg, fg = colors.fg },
       },
       insert = {
         a = { bg = colors.green, fg = colors.bg, gui = 'bold' },
-        b = { bg = colors.green, fg = colors.bg }, -- Consistent pill color
+        b = { bg = colors.kitty, fg = colors.bg }, -- Pill background
         c = { bg = colors.bg, fg = colors.fg },
       },
       visual = {
         a = { bg = colors.violet, fg = colors.bg, gui = 'bold' },
-        b = { bg = colors.green, fg = colors.bg },
+        b = { bg = colors.green, fg = colors.bg }, -- Consistent pill color
         c = { bg = colors.bg, fg = colors.fg },
       },
       command = {
@@ -42,7 +46,7 @@ return {
       },
       inactive = {
         a = { bg = colors.inactive_bg, fg = colors.semilightgray, gui = 'bold' },
-        b = { bg = colors.inactive_bg, fg = colors.semilightgray },
+        b = { bg = colors.green, fg = colors.bg },
         c = { bg = colors.inactive_bg, fg = colors.semilightgray },
       },
     }
@@ -51,20 +55,22 @@ return {
     lualine.setup {
       options = {
         theme = my_lualine_theme,
-        component_separators = { left = '', right = '' }, -- Pill separators
-        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' }, -- Pill separators
+        section_separators = { left = ' ', right = ' ' },
       },
       sections = {
-        lualine_a = { 'mode' },
+        lualine_a = {
+          { 'mode', separator = { left = '', right = '' }, padding = 1 },
+        },
         lualine_b = {
           { -- Pill-shaped filename component
             'filename',
             path = 1,
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             padding = 1,
           },
         },
-        lualine_c = { 'diagnostics' }, -- Removed Git components
+        lualine_c = { 'lsp_status', 'diagnostics', 'branch', 'diff' },
         lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },

@@ -19,7 +19,7 @@ return {
         'vim',
         'vimdoc',
         'typescript',
-        'tsx', -- Added for proper JSX support
+        'tsx', -- for proper JSX support, its always goddamn js
         'javascript',
         'python',
         'html',
@@ -54,9 +54,6 @@ return {
             -- Parameter textobjects
             ['ap'] = '@parameter.outer',
             ['ip'] = '@parameter.inner',
-            -- JSX textobjects
-            ['ax'] = '@jsx_element.outer',
-            ['ix'] = '@jsx_element.inner',
           },
         },
         move = {
@@ -67,7 +64,7 @@ return {
       },
     }
 
-    -- Create custom queries directory structure
+    -- Create custom queries directory structure (everything else is just fine but its always js! and sometimes py XD)
     local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
     parser_config.tsx.filetype_to_parsername = { 'javascript', 'typescript', 'tsx' }
   end,

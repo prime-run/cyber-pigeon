@@ -1,3 +1,4 @@
+--cargo run 'f-js'
 return {
   {
     'pmizio/typescript-tools.nvim',
@@ -8,7 +9,7 @@ return {
       'neovim/nvim-lspconfig',
     },
     config = function()
-      -- Merge capabilities properly
+      -- Merge capabilities properly , it really shouldnt work but it does lol
       local capabilities = vim.tbl_deep_extend(
         'force',
         vim.lsp.protocol.make_client_capabilities(),
@@ -25,19 +26,21 @@ return {
       require('typescript-tools').setup {
         capabilities = capabilities,
         on_attach = function(client, bufnr)
-          -- Disable formatting in favor of null-ls
+          -- disabled formatting in favor of null-ls or other stuff
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
 
-          -- TS-specific keymaps
+          -- TS-remaps
           local map = function(mode, lhs, rhs, desc)
             vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = 'TS: ' .. desc })
           end
+
+          --global remaps had inconsistency so here we are redefining them just for ts
           map('n', '<leader>toi', '<cmd>TSToolsOrganizeImports<CR>', 'Organize Imports')
           map('n', '<leader>tru', '<cmd>TSToolsRemoveUnused<CR>', 'Remove Unused')
           map('n', '<leader>tai', '<cmd>TSToolsAddMissingImports<CR>', 'Add Missing Imports')
           map('n', '<leader>trf', '<cmd>TSToolsRenameFile<CR>', 'Rename File')
-          map('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+          -- map('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
         end,
 
         settings = {

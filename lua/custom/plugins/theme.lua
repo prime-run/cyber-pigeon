@@ -1,4 +1,4 @@
-function ColorMyPencils(color)
+function Schemer(color)
   color = color or 'rose-pine'
   vim.cmd.colorscheme(color)
 end
@@ -27,7 +27,7 @@ return {
     end,
   },
 
-  {
+  { --primagen rosepine config
     'rose-pine/neovim',
 
     name = 'rose-pine',
@@ -81,7 +81,7 @@ return {
         },
       }
 
-      ColorMyPencils 'tokyonight-moon'
+      Schemer 'tokyonight-moon'
     end,
   },
 }

@@ -1,3 +1,4 @@
+--TODO:Update this config! holly molly blink is moving fast gg ++++
 return {
   'saghen/blink.cmp',
   version = '*',
@@ -33,7 +34,7 @@ return {
         auto_show = true,
         auto_show_delay_ms = 150,
         window = {
-          min_width = 13,
+          min_width = 15,
           border = 'solid',
           scrollbar = false,
         },

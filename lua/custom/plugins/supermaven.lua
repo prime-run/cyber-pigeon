@@ -1,5 +1,6 @@
 return {
   'github/copilot.vim',
+  vim.api.nvim_set_keymap('i', '<C-l>', 'copilot#Accept()', { expr = true, silent = true, noremap = false }),
 }
 
 -- return {

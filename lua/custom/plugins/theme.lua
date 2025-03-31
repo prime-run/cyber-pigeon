@@ -38,7 +38,7 @@ return {
         dark_variant = 'main',
         disable_background = true,
         disable_float_background = false,
-        disable_italics = true,
+        disable_italics = false,
         -- Increase color vibrancy
         groups = {
           -- background = '#000000',
@@ -81,7 +81,7 @@ return {
         },
       }
 
-      Schemer 'tokyonight-moon'
+      -- Schemer 'tokyonight-moon'
     end,
   },
 }

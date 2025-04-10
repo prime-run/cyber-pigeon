@@ -317,6 +317,7 @@ require('lazy').setup {
   require 'core.plugins.gitsigns',
 
   { import = 'custom.plugins' },
+  { import = 'custom.themes' },
   -- <leader>sh snvim help
 }
 
